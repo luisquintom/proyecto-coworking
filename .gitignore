@@ -8,7 +8,7 @@ __pycache__/
 # BD 
 *.sqlite3
 
-# Django 
+# Backend
 db.sqlite3
 /Back-end/staticfiles/
 /Back-end/media/
