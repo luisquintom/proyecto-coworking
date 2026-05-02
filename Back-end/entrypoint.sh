@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Esperar a que la base de datos esté lista
+# Esperamos a que la base de datos esté lista
 echo "Esperando a MySQL..."
 while ! nc -z db 3306; do
   sleep 1

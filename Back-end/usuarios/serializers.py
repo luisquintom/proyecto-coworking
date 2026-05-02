@@ -10,7 +10,7 @@ class RegistroSerializer(serializers.ModelSerializer):
         fields = ['first_name', 'last_name', 'email', 'password']
 
     def create(self, validated_data):
-        # Usamos el email como 'username' para cumplir con tu requerimiento
+        # Usamos el email como 'username' 
         user = User.objects.create_user(
             username=validated_data['email'], 
             email=validated_data['email'],
