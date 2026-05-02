@@ -5,7 +5,6 @@ from .views import SedeViewSet, EspacioViewSet, ReservaViewSet
 router = DefaultRouter()
 router.register(r'sedes', SedeViewSet)
 router.register(r'espacios', EspacioViewSet)
-#router.register(r'reservas', ReservaViewSet)
 router.register(r'reservas', ReservaViewSet, basename='reserva')
 
 urlpatterns = [
