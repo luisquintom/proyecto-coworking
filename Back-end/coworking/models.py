@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 from django.db import models
-from django.contrib.auth.models import User # Importamos el modelo de usuario nativo de Django
+from django.contrib.auth.models import User 
 
 class Sede(models.Model):
     nombre = models.CharField(max_length=100)
@@ -16,7 +16,7 @@ class Espacio(models.Model):
     # Un espacio pertenece a una sola sede
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, related_name='espacios')
     nombre = models.CharField(max_length=100)
-    tipo = models.CharField(max_length=50) # Ej: Escritorio, Sala de juntas
+    tipo = models.CharField(max_length=50) # escritorio, sala de juntas, sala de reuniones, etc
     capacidad = models.IntegerField()
 
     def __str__(self):
