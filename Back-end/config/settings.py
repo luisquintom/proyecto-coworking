@@ -2,28 +2,23 @@ import os
 import environ
 from pathlib import Path
 
-# Inicializar environ
 env = environ.Env(
     DEBUG=(bool, False)
 )
 
-# BASE_DIR es la carpeta donde está manage.py
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# RUTA CORREGIDA: Buscamos el .env un nivel arriba de BASE_DIR (raíz del proyecto)
-# y también en BASE_DIR por si acaso.
+# Buscamos el .env en raíz del proyecto
 ENV_FILE = os.path.join(BASE_DIR.parent, ".env")
 if os.path.exists(ENV_FILE):
     environ.Env.read_env(ENV_FILE)
 else:
-    # Si no lo encuentra arriba, intenta en la carpeta actual del backend
     environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Configuración desde el entorno
 SECRET_KEY = env('SECRET_KEY', default='django-insecure-default-key-change-me')
 DEBUG = env('DEBUG')
 
-# ALLOWED_HOSTS procesado como lista
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
 INSTALLED_APPS = [
@@ -70,7 +65,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Configuración de base de datos manual usando variables del entorno
+# base de datos usando variables del entorno
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -89,7 +84,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internacionalización adaptada a tu zona
+# Aqui configuramos la zona horaria segun la ubicaion
 LANGUAGE_CODE = 'es-es'
 TIME_ZONE = 'Atlantic/Canary'
 USE_I18N = True
