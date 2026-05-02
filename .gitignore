@@ -1,0 +1,23 @@
+# Entorno
+.env
+venv/
+env/
+__pycache__/
+*.pyc
+
+# BD 
+*.sqlite3
+
+# Django 
+db.sqlite3
+/Back-end/staticfiles/
+/Back-end/media/
+
+# Frontend
+node_modules/
+dist/
+.DS_Store
+*.local
+
+# Docker 
+.docker/

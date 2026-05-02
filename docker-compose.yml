@@ -1,0 +1,52 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: coworking_db_new
+    restart: always
+    env_file: .env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - coworking-network-new
+
+  backend:
+    build: ./Back-end
+    container_name: coworking_backend_new
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Back-end:/app
+    env_file: .env
+    environment:
+      - MYSQL_HOST=db  
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - coworking-network-new
+
+  frontend:
+    build: ./Front-end
+    container_name: coworking_frontend_new
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Front-end:/app
+      - /app/node_modules 
+    env_file: .env
+    stdin_open: true
+    tty: true
+    networks:
+      - coworking-network-new
+
+networks:
+  coworking-network-new:
+    driver: bridge
+
+volumes:
+  db_data:
