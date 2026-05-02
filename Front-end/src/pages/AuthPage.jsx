@@ -40,7 +40,7 @@ const AuthPage = ({ onLoginSuccess }) => {
 
     // ESTRUCTURA BASADA EN GRID Y FLEXBOX
     const styles = {
-        // GRID: Divide la pantalla en dos columnas iguales (1fr cada una)
+        // GRID: Divide la pantalla en dos columnas iguales
         container: { 
             display: 'grid', 
             gridTemplateColumns: '1fr 1fr', 
@@ -49,7 +49,7 @@ const AuthPage = ({ onLoginSuccess }) => {
             fontFamily: 'sans-serif', 
             overflow: 'hidden' 
         },
-        // FLEXBOX: Centra el contenido de la imagen vertical y horizontalmente
+        // FLEXBOX: Centra el contenido de la imagen (vertical - horizontal)
         imageSection: {
             display: 'flex',
             flexDirection: 'column',
@@ -67,7 +67,7 @@ const AuthPage = ({ onLoginSuccess }) => {
             top: 0, left: 0, right: 0, bottom: 0, 
             backgroundColor: 'rgba(0,0,0,0.5)' 
         },
-        // FLEXBOX: Centra la tarjeta de login en su mitad de la pantalla
+        // FLEXBOX: Centra la tarjeta de login
         formSection: { 
             display: 'flex', 
             justifyContent: 'center', 
@@ -107,16 +107,16 @@ const AuthPage = ({ onLoginSuccess }) => {
 
     return (
         <div style={styles.container}>
-            {/* SECCIÓN IZQUIERDA (IMAGE SECTION) */}
+            {/* SECCIÓN IZQUIERDA pantalla principal */}
             <div style={styles.imageSection}>
                 <div style={styles.overlay}></div>
                 <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-                    <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>Coworking Spaces</h1>
+                    <h1 style={{ fontSize: '4.5rem', marginBottom: '1rem' }}>Coworking Spaces</h1>
                     <p style={{ fontSize: '1.2rem', fontWeight: '300' }}>Gestiona tus reservas de forma profesional.</p>
                 </div>
             </div>
 
-            {/* SECCIÓN DERECHA (FORM SECTION) */}
+            {/* SECCIÓN DERECHA pantalla principal- LOGIN inicial */}
             <div style={styles.formSection}>
                 <div style={styles.card}>
                     <h2 style={{ color: '#2c3e50', marginBottom: '30px', textAlign: 'center', fontSize: '24px' }}>
