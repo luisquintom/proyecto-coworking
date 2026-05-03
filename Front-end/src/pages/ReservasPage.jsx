@@ -24,7 +24,7 @@ const ReservasPage = () => {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                // Extraemos el ID del usuario del token JWT para mostrarlo en la UI
+                // Extraemos el ID del usuario del token JWT para mostrarlo en la Interfaz del usuario
                 const payload = JSON.parse(window.atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
                 setUserLabel(`ID Usuario: ${payload.user_id}`);
             } catch (e) {
@@ -61,7 +61,7 @@ const ReservasPage = () => {
 
     const espaciosFiltrados = espacios.filter(esp => esp.sede === parseInt(sedeSeleccionada));
 
-    // --- LÓGICA DE VALIDACIÓN (REGLAS DE NEGOCIO) ---
+    // --- Validaciones en el FrontEnd (Reglas del negocio Coworking) ---
     const validarReserva = () => {
         const ahora = new Date();
         
@@ -110,13 +110,13 @@ const ReservasPage = () => {
         }
 
         // 6. DISPONIBILIDAD (SOLAPAMIENTO): Verifica si el sitio ya está ocupado
+        // para evitar duplicidad en el mismo espacio y fecha
         const tieneConflicto = reservas.find(r => {
+            // Solo comparamos si es el mismo espacio y la misma fecha
             if (r.espacio === parseInt(formData.espacio) && r.fecha === formData.fecha) {
-                return (
-                    (formData.hora_inicio >= r.hora_inicio && formData.hora_inicio < r.hora_fin) ||
-                    (formData.hora_fin > r.hora_inicio && formData.hora_fin <= r.hora_fin) ||
-                    (formData.hora_inicio <= r.hora_inicio && formData.hora_fin >= r.hora_fin)
-                );
+                // Hay conflicto si: (NuevoInicio < ExistenteFin) Y (NuevoFin > ExistenteInicio)
+                const conflicto = formData.hora_inicio < r.hora_fin && formData.hora_fin > r.hora_inicio;          
+                return conflicto;
             }
             return false;
         });
@@ -151,7 +151,26 @@ const ReservasPage = () => {
             alert('✅ Reserva guardada con éxito');
             window.location.reload(); 
         } catch (error) {
-            alert('❌ Error al guardar la reserva. Verifica la conexión.');
+           // 3. Captura inteligente de errores del Backend
+            if (error.response && error.response.data) {
+                // Si el backend envió un error de validación (como el de solapamiento)
+                // Django Rest Framework suele enviar los errores en un objeto o una lista
+                const mensajesError = error.response.data;
+                
+                if (mensajesError.non_field_errors) {
+                    alert(`❌ ${mensajesError.non_field_errors[0]}`);
+                } else if (typeof mensajesError === 'object') {
+                    // Si el error viene de un campo específico o es el ValidationError personalizado
+                    const primerError = Object.values(mensajesError)[0];
+                    alert(`❌ ${primerError}`);
+                } else {
+                    alert('❌ Error de validación en el servidor.');
+                }
+            } else {
+                // Error de red o servidor caído
+                alert('❌ Error al conectar con el servidor. Verifica tu conexión a internet.');
+            }
+            console.error("Detalle del error:", error);
         }
     };
 
