@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router";
+import "./styles.css";
 
 function AuthPage ({ onLoginSuccess }) {
     let navigate = useNavigate();
@@ -64,30 +65,31 @@ function AuthPage ({ onLoginSuccess }) {
             backgroundImage: 'url("/principal_home.avif")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            color: 'white',
+            color: '#fff3cc',
             padding: '40px',
             position: 'relative'
         },
         overlay: { 
             position: 'absolute', 
             top: 0, left: 0, right: 0, bottom: 0, 
-            backgroundColor: 'rgba(0,0,0,0.5)' 
+            backgroundColor: 'rgba(1,2,3,0.5)'
         },
         // FLEXBOX: Centra la tarjeta de login
         formSection: { 
             display: 'flex', 
             justifyContent: 'center', 
-            alignItems: 'center', 
-            backgroundImage: 'linear-gradient(rgba(240, 242, 245, 0.8), rgba(240, 242, 245, 0.8)), url("/principal_home2.avif")',
+            alignItems: 'center',
+            backgroundImage: 'url("/principal_home2.avif")',
             backgroundSize: 'cover',
-            backgroundPosition: 'center'
+            backgroundPosition: 'center',
+            backdropFilter: 'invert(1)'
         },
         card: { 
             width: '100%', 
             maxWidth: '400px', 
             padding: '40px', 
-            backgroundColor: 'rgba(255, 255, 255, 0.95)', 
-            borderRadius: '12px', 
+            backgroundColor: 'rgba(1,2,3,0.96)',
+            borderRadius: '8px', 
             transform: 'scale(0.85)',
             boxShadow: '0 8px 24px rgba(0,0,0,0.1)' 
         },
@@ -96,15 +98,15 @@ function AuthPage ({ onLoginSuccess }) {
             padding: '12px 15px', 
             marginBottom: '15px', 
             borderRadius: '8px', 
-            border: '1px solid #ddd', 
+            border: '1px solid #3B3130',
             boxSizing: 'border-box',
             fontSize: '16px'
         },
         button: { 
             width: '100%', 
             padding: '14px', 
-            backgroundColor: '#2c3e50', 
-            color: 'white', 
+            backgroundColor: '#D3AC2C',
+            color: '#010203',
             border: 'none', 
             borderRadius: '8px', 
             cursor: 'pointer', 
@@ -128,10 +130,10 @@ function AuthPage ({ onLoginSuccess }) {
             {/* SECCIÓN DERECHA pantalla principal- LOGIN inicial */}
             <div style={styles.formSection}>
                 <div style={styles.card}>
-                    <h2 style={{ color: '#2c3e50', marginBottom: '30px', textAlign: 'center', fontSize: '24px' }}>
+                    <h2 style={{ color: '#B16C04', marginBottom: '30px', textAlign: 'center', fontSize: '24px' }}>
                         {isLogin ? 'Bienvenido de nuevo' : 'Crea tu cuenta'}
                     </h2>
-                    
+
                     <form onSubmit={handleSubmit}>
                         {!isLogin && (
                             // GRID interno para colocar Nombre y Apellido en la misma línea
@@ -142,7 +144,7 @@ function AuthPage ({ onLoginSuccess }) {
                         )}
                         <input type="email" name="email" placeholder="Correo electrónico" style={styles.input} onChange={handleChange} required />
                         <input type="password" name="password" placeholder="Contraseña" style={styles.input} onChange={handleChange} required />
-                        
+
                         <button type="submit" style={styles.button}>
                             {isLogin ? 'Iniciar Sesión' : 'Registrarse'}
                         </button>

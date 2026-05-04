@@ -189,14 +189,14 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         color: '#333',
-        overflow: 'hidden', 
+        overflow: 'hidden',
         margin: 0,
         padding: 0
     },
     overlay: {
         position: 'absolute',
         top: 0, left: 0, right: 0, bottom: 0,
-        backgroundColor: 'rgba(30, 39, 46, 0.75)', 
+        backgroundColor: 'rgba(1,2,3,0.5)',
         zIndex: 1
     },
     contentContainer: {
@@ -213,9 +213,9 @@ const styles = {
         transformOrigin: 'center center' 
     },
     card: {
-        backgroundColor: 'rgba(255, 255, 255, 0.98)', 
+        backgroundColor: 'rgba(1,2,3,0.95)',
         padding: '35px',
-        borderRadius: '24px',
+        borderRadius: '8px',
         boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
         height: '85vh', 
         display: 'flex',
@@ -223,14 +223,15 @@ const styles = {
         overflow: 'hidden', 
         boxSizing: 'border-box'
     },
-    sectionTitle: { color: '#1e272e', fontSize: '26px', fontWeight: '600', marginBottom: '25px' },
-    label: { fontWeight: '500', display: 'block', marginBottom: '10px', fontSize: '15px', color: '#485460' },
+    sectionTitle: { color: '#D3AC2C', fontSize: '26px', fontWeight: '600', marginBottom: '25px' },
+    label: { fontWeight: '500', display: 'block', marginBottom: '10px', fontSize: '15px', color: '#B16C04' },
     input: {
-        width: '100%', padding: '16px', marginBottom: '20px', borderRadius: '12px', border: '1px solid #c3c4c8',
-        boxSizing: 'border-box', fontSize: '16px', fontFamily: 'inherit', color: '#2f3542', backgroundColor: '#f9f9f9'
+        width: '100%', padding: '16px', marginBottom: '20px', borderRadius: '8px',
+        boxSizing: 'border-box', fontSize: '16px', fontFamily: 'inherit', color: '#ffe48b', backgroundColor: '#3B3130',
+        borderWidth: '2px', borderColor: '#B16C04'
     },
     button: {
-        width: '100%', padding: '18px', backgroundColor: '#1abc9c', color: 'white', border: 'none', borderRadius: '12px',
+        width: '100%', padding: '18px', backgroundColor: '#B16C04', color: '#fff3cc', border: 'none', borderRadius: '8px',
         cursor: 'pointer', fontWeight: '600', fontSize: '16px', fontFamily: 'inherit', marginTop: '10px'
     },
 };
@@ -305,7 +306,7 @@ const styles = {
                 <div style={styles.card}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '35px' }}>
                         <h2 style={styles.sectionTitle}>Mis Reservas</h2>
-                        <span style={{ fontSize: '13px', backgroundColor: '#2f3542', color: 'white', padding: '8px 16px', borderRadius: '50px', fontWeight: '500' }}>
+                        <span style={{ fontSize: '13px', backgroundColor: '#2f3542', color: 'white', padding: '8px 16px', borderRadius: '8px' }}>
                             🧑‍💻 {userLabel}
                         </span>
                     </div>
@@ -316,7 +317,7 @@ const styles = {
                     const espacioDetalle = espacios.find(e => e.id === r.espacio);
                     
                     return (
-                        <li key={r.id} style={{ padding: '25px', marginBottom: '20px', borderRadius: '16px', border: '1px solid #f1f2f6', backgroundColor: '#fff' }}>
+                        <li key={r.id} style={{ padding: '25px', marginBottom: '20px', borderRadius: '8px' }}>
                             <div style={{ fontSize: '18px', fontWeight: '600', color: '#2c3e50', marginBottom: '8px' }}>
                               {obtenerInfoReserva(r.espacio)}  
                             </div>
@@ -329,7 +330,7 @@ const styles = {
                                      🕒 {r.hora_inicio.slice(0,5)} - {r.hora_fin.slice(0,5)}
                                 </div>
                                 {/* etiqueta de capacidad en la lista */}
-                                <div style={{ fontSize: '14px', color: '#3498db', backgroundColor: '#ebf5fb', padding: '2px 8px', borderRadius: '6px', fontWeight: '500' }}>
+                                <div style={{ fontSize: '14px', color: '#3498db', backgroundColor: '#ebf5fb', padding: '2px 8px', borderRadius: '8px' }}>
                                     👥 Capacidad: {espacioDetalle?.capacidad || 'N/A'}
                                 </div>
                             </div>

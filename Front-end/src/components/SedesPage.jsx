@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api/axios';
 
+
 const SedesPage = () => {
     const [sedes, setSedes] = useState([]);
 
@@ -28,7 +29,7 @@ const SedesPage = () => {
                             backgroundColor: '#007bff',
                             color: 'white',
                             border: 'none',
-                            borderRadius: '4px',
+                            borderRadius: '8px',
                             cursor: 'pointer'
                         }}>
                             Ver Espacios
