@@ -174,57 +174,69 @@ const ReservasPage = () => {
         }
     };
 
-    // --- ESTILOS MODERNOS, UNIFORMES Y RESPONSIVOS ---
-    const styles = {
-        mainWrapper: {
-            minHeight: '100vh',
-            width: '100%',
-            backgroundImage: 'url("https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1500&q=80")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
-            position: 'relative',
-            fontFamily: '"Inter", "Segoe UI", "Roboto", sans-serif',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            color: '#333'
-        },
-        overlay: {
-            position: 'absolute',
-            top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: 'rgba(30, 39, 46, 0.75)', 
-            zIndex: 1
-        },
-        contentContainer: {
-            position: 'relative',
-            zIndex: 2,
-            padding: '20px',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
-            gap: '30px',
-            width: '95%', 
-            maxWidth: '1800px',
-            margin: '60px auto'
-        },
-        card: {
-            backgroundColor: 'rgba(255, 255, 255, 0.98)', 
-            padding: '45px',
-            borderRadius: '24px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-            height: 'fit-content'
-        },
-        sectionTitle: { color: '#1e272e', fontSize: '26px', fontWeight: '600', marginBottom: '35px' },
-        label: { fontWeight: '500', display: 'block', marginBottom: '10px', fontSize: '15px', color: '#485460' },
-        input: {
-            width: '100%', padding: '16px', marginBottom: '25px', borderRadius: '12px', border: '1px solid #dcdde1',
-            boxSizing: 'border-box', fontSize: '16px', fontFamily: 'inherit', color: '#2f3542', backgroundColor: '#f9f9f9'
-        },
-        button: {
-            width: '100%', padding: '18px', backgroundColor: '#1abc9c', color: 'white', border: 'none', borderRadius: '12px',
-            cursor: 'pointer', fontWeight: '600', fontSize: '16px', fontFamily: 'inherit', marginTop: '10px'
-        }
-    };
+   // --- ESTILOS ---
+const styles = {
+    mainWrapper: {
+        height: '90vh',
+        width: '99vw',
+        boxSizing: 'border-box',
+        backgroundImage: 'url("/reservas_coworking_.avif")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+        position: 'relative',
+        fontFamily: '"Inter", "Segoe UI", "Roboto", sans-serif',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center', // Centramos verticalmente para evitar que el contenido "caiga"
+        color: '#333',
+        overflow: 'hidden', // Bloqueo total de la barra lateral del navegador
+        margin: 0,
+        padding: 0
+    },
+    overlay: {
+        position: 'absolute',
+        top: 0, left: 0, right: 0, bottom: 0,
+        backgroundColor: 'rgba(30, 39, 46, 0.75)', 
+        zIndex: 1
+    },
+    contentContainer: {
+        position: 'relative',
+        zIndex: 2,
+        padding: '0px',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+        gap: '80px',
+        width: '95%', 
+        maxWidth: '1400px',
+        margin: '0 auto',
+        transform: 'scale(0.75)',
+        transformOrigin: 'center center' 
+    },
+    card: {
+        backgroundColor: 'rgba(255, 255, 255, 0.98)', 
+        padding: '35px', // Reducido un poco para ganar espacio
+        borderRadius: '24px',
+        boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+        height: '85vh', 
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden', 
+        boxSizing: 'border-box'
+    },
+    sectionTitle: { color: '#1e272e', fontSize: '26px', fontWeight: '600', marginBottom: '25px' },
+    label: { fontWeight: '500', display: 'block', marginBottom: '10px', fontSize: '15px', color: '#485460' },
+    input: {
+        width: '100%', padding: '16px', marginBottom: '20px', borderRadius: '12px', border: '1px solid #c3c4c8',
+        boxSizing: 'border-box', fontSize: '16px', fontFamily: 'inherit', color: '#2f3542', backgroundColor: '#f9f9f9'
+    },
+    button: {
+        width: '100%', padding: '18px', backgroundColor: '#1abc9c', color: 'white', border: 'none', borderRadius: '12px',
+        cursor: 'pointer', fontWeight: '600', fontSize: '16px', fontFamily: 'inherit', marginTop: '10px'
+    },
+   
+   
+};
 
     return (
         <div style={styles.mainWrapper}>
@@ -233,25 +245,48 @@ const ReservasPage = () => {
             <div style={styles.contentContainer}>
                 
                 {/* BLOQUE IZQUIERDO: FORMULARIO */}
+                {/* FORMULARIO DE RESERVA */}
                 <div style={styles.card}>
                     <h2 style={styles.sectionTitle}>Nueva Reserva</h2>
                     <form onSubmit={handleSubmit}>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '25px' }}>
                             <div>
                                 <label style={styles.label}>Sede</label>
-                                <select style={styles.input} required onChange={e => setSedeSeleccionada(e.target.value)}>
+                                <select style={styles.input} required onChange={e => {
+                                    setSedeSeleccionada(e.target.value);
+                                    setFormData({...formData, espacio: ''}); // Reiniciar espacio al cambiar sede
+                                }}>
                                     <option value="">-- Selecciona --</option>
                                     {sedes.map(s => <option key={s.id} value={s.id}>{s.nombre}</option>)}
                                 </select>
                             </div>
                             <div>
                                 <label style={styles.label}>Espacio</label>
-                                <select style={styles.input} required disabled={!sedeSeleccionada} onChange={e => setFormData({...formData, espacio: e.target.value})}>
+                                <select 
+                                    style={styles.input} 
+                                    required 
+                                    disabled={!sedeSeleccionada} 
+                                    value={formData.espacio}
+                                    onChange={e => setFormData({...formData, espacio: e.target.value})}
+                                >
                                     <option value="">-- Selecciona --</option>
-                                    {espaciosFiltrados.map(esp => <option key={esp.id} value={esp.id}>{esp.nombre}</option>)}
+                                    {espaciosFiltrados.map(esp => (
+                                        <option key={esp.id} value={esp.id}>
+                                            {esp.nombre} (Capacidad: {esp.capacidad})
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
+
+                        {/* INDICADOR VISUAL DE CAPACIDAD (TOQUE HUMANO) */}
+                        {formData.espacio && (
+                            <div style={styles.infoBadge}>
+                                <strong>💡 Información del espacio:</strong> Máximo {
+                                    espacios.find(e => e.id === parseInt(formData.espacio))?.capacidad
+                                } personas autorizadas.
+                            </div>
+                        )}
 
                         <label style={styles.label}>Fecha de Reserva</label>
                         <input type="date" style={styles.input} required onChange={e => setFormData({...formData, fecha: e.target.value})} />
@@ -276,26 +311,36 @@ const ReservasPage = () => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '35px' }}>
                         <h2 style={styles.sectionTitle}>Mis Reservas</h2>
                         <span style={{ fontSize: '13px', backgroundColor: '#2f3542', color: 'white', padding: '8px 16px', borderRadius: '50px', fontWeight: '500' }}>
-                            👤 {userLabel}
+                            🧑‍💻 {userLabel}
                         </span>
                     </div>
                     
                     <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
-                        {reservas.length === 0 ? (
-                            <p style={{ textAlign: 'center', color: '#a4b0be', fontSize: '16px', marginTop: '50px' }}>No hay reservas activas.</p>
-                        ) : (
-                            <ul style={{ listStyle: 'none', padding: 0 }}>
-                                {reservas.map(r => (
-                                    <li key={r.id} style={{ padding: '25px', marginBottom: '20px', borderRadius: '16px', border: '1px solid #f1f2f6', backgroundColor: '#fff' }}>
-                                        <div style={{ fontSize: '18px', fontWeight: '600', color: '#2c3e50', marginBottom: '8px' }}>
-                                            {obtenerInfoReserva(r.espacio)}
-                                        </div>
-                                        <div style={{ fontSize: '15px', color: '#1abc9c', fontWeight: '600' }}>📅 {r.fecha}</div>
-                                        <div style={{ fontSize: '15px', color: '#747d8c', marginTop: '8px' }}>🕒 {r.hora_inicio.slice(0,5)} - {r.hora_fin.slice(0,5)}</div>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
+                        {reservas.map(r => {
+                    // Obtenemos el objeto espacio para sacar la capacidad directamente
+                    const espacioDetalle = espacios.find(e => e.id === r.espacio);
+                    
+                    return (
+                        <li key={r.id} style={{ padding: '25px', marginBottom: '20px', borderRadius: '16px', border: '1px solid #f1f2f6', backgroundColor: '#fff' }}>
+                            <div style={{ fontSize: '18px', fontWeight: '600', color: '#2c3e50', marginBottom: '8px' }}>
+                              {obtenerInfoReserva(r.espacio)}  
+                            </div>
+                            
+                            <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                                <div style={{ fontSize: '15px', color: '#1abc9c', fontWeight: '600' }}>
+                                    🗓️ {r.fecha}
+                                </div>
+                                <div style={{ fontSize: '15px', color: '#747d8c' }}>
+                                     🕒 {r.hora_inicio.slice(0,5)} - {r.hora_fin.slice(0,5)}
+                                </div>
+                                {/* etiqueta de capacidad en la lista */}
+                                <div style={{ fontSize: '14px', color: '#3498db', backgroundColor: '#ebf5fb', padding: '2px 8px', borderRadius: '6px', fontWeight: '500' }}>
+                                    👥 Capacidad: {espacioDetalle?.capacidad || 'N/A'}
+                                </div>
+                            </div>
+                        </li>
+                    );
+                })}
                     </div>
                 </div>
 
@@ -305,3 +350,4 @@ const ReservasPage = () => {
 };
 
 export default ReservasPage;
+

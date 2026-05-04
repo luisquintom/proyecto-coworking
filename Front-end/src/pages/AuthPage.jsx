@@ -44,10 +44,13 @@ const AuthPage = ({ onLoginSuccess }) => {
         container: { 
             display: 'grid', 
             gridTemplateColumns: '1fr 1fr', 
-            height: '100vh', 
+            height: '98vh', 
             width: '100vw', 
+            maxWidth: '100%',
+            maxHeight: '100%', 
+            overflow: 'hidden',
             fontFamily: 'sans-serif', 
-            overflow: 'hidden' 
+            boxSizing: 'border-box' 
         },
         // FLEXBOX: Centra el contenido de la imagen (vertical - horizontal)
         imageSection: {
@@ -55,7 +58,7 @@ const AuthPage = ({ onLoginSuccess }) => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundImage: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80")',
+            backgroundImage: 'url("/principal_home.avif")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             color: 'white',
@@ -72,14 +75,18 @@ const AuthPage = ({ onLoginSuccess }) => {
             display: 'flex', 
             justifyContent: 'center', 
             alignItems: 'center', 
-            backgroundColor: '#f0f2f5' 
+            // Capa de color #f0f2f5 al 50% de opacidad sobre la imagen
+            backgroundImage: 'linear-gradient(rgba(240, 242, 245, 0.8), rgba(240, 242, 245, 0.8)), url("/principal_home2.avif")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
         },
         card: { 
             width: '100%', 
             maxWidth: '400px', 
             padding: '40px', 
-            backgroundColor: 'white', 
+            backgroundColor: 'rgba(255, 255, 255, 0.95)', 
             borderRadius: '12px', 
+            transform: 'scale(0.85)',
             boxShadow: '0 8px 24px rgba(0,0,0,0.1)' 
         },
         input: { 
