@@ -4,10 +4,8 @@ import ReservasPage from './pages/ReservasPage';
 
 
 function App() {
-  // Estado para saber si el usuario está logeado
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Al cargar la app, verificamos si ya tiene un token guardado
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -15,7 +13,6 @@ function App() {
     }
   }, []);
 
-  // Función para cerrar sesión (útil para tu entrega)
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
@@ -36,7 +33,6 @@ function App() {
           <ReservasPage />
         </>
       ) : (
-        /* Le pasamos una función al AuthPage para que nos avise cuando el login sea exitoso */
         <AuthPage onLoginSuccess={() => setIsLoggedIn(true)} />
       )}
     </div>

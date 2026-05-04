@@ -19,11 +19,9 @@ class ReservaViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        # reservas del usuario autenticado
         return Reserva.objects.filter(usuario=self.request.user)
 
     def perform_create(self, serializer):
-        # Guarda la reserva del usuario actual
         serializer.save(usuario=self.request.user)
 
 class RegisterView(generics.CreateAPIView):

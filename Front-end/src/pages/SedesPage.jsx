@@ -5,7 +5,6 @@ const SedesPage = () => {
     const [sedes, setSedes] = useState([]);
 
     useEffect(() => {
-        // Pedimos los datos al "grifo" que abrimos en Django
         api.get('sedes/')
             .then(response => setSedes(response.data))
             .catch(error => console.error("Error cargando sedes:", error));

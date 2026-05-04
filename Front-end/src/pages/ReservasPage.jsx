@@ -24,7 +24,6 @@ const ReservasPage = () => {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                // Extraemos el ID del usuario del token JWT para mostrarlo en la Interfaz del usuario
                 const payload = JSON.parse(window.atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
                 setUserLabel(`ID Usuario: ${payload.user_id}`);
             } catch (e) {
@@ -109,12 +108,10 @@ const ReservasPage = () => {
             return false;
         }
 
-        // 6. DISPONIBILIDAD (SOLAPAMIENTO): Verifica si el sitio ya está ocupado
-        // para evitar duplicidad en el mismo espacio y fecha
+        // 6. DISPONIBILIDAD (SOLAPAMIENTO)
         const tieneConflicto = reservas.find(r => {
             // Solo comparamos si es el mismo espacio y la misma fecha
             if (r.espacio === parseInt(formData.espacio) && r.fecha === formData.fecha) {
-                // Hay conflicto si: (NuevoInicio < ExistenteFin) Y (NuevoFin > ExistenteInicio)
                 const conflicto = formData.hora_inicio < r.hora_fin && formData.hora_fin > r.hora_inicio;          
                 return conflicto;
             }
@@ -180,7 +177,7 @@ const styles = {
         height: '90vh',
         width: '99vw',
         boxSizing: 'border-box',
-        backgroundImage: 'url("/reservas_coworking_.avif")',
+        backgroundImage: 'url("/reservas_coworking.avif")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
@@ -188,9 +185,9 @@ const styles = {
         fontFamily: '"Inter", "Segoe UI", "Roboto", sans-serif',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center', // Centramos verticalmente para evitar que el contenido "caiga"
+        alignItems: 'center',
         color: '#333',
-        overflow: 'hidden', // Bloqueo total de la barra lateral del navegador
+        overflow: 'hidden', 
         margin: 0,
         padding: 0
     },
@@ -210,12 +207,12 @@ const styles = {
         width: '95%', 
         maxWidth: '1400px',
         margin: '0 auto',
-        transform: 'scale(0.75)',
+        transform: 'scale(0.8)',
         transformOrigin: 'center center' 
     },
     card: {
         backgroundColor: 'rgba(255, 255, 255, 0.98)', 
-        padding: '35px', // Reducido un poco para ganar espacio
+        padding: '35px',
         borderRadius: '24px',
         boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
         height: '85vh', 
@@ -243,8 +240,6 @@ const styles = {
             <div style={styles.overlay}></div>
             
             <div style={styles.contentContainer}>
-                
-                {/* BLOQUE IZQUIERDO: FORMULARIO */}
                 {/* FORMULARIO DE RESERVA */}
                 <div style={styles.card}>
                     <h2 style={styles.sectionTitle}>Nueva Reserva</h2>
@@ -279,7 +274,6 @@ const styles = {
                             </div>
                         </div>
 
-                        {/* INDICADOR VISUAL DE CAPACIDAD (TOQUE HUMANO) */}
                         {formData.espacio && (
                             <div style={styles.infoBadge}>
                                 <strong>💡 Información del espacio:</strong> Máximo {

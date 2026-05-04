@@ -44,7 +44,7 @@ const AuthPage = ({ onLoginSuccess }) => {
         container: { 
             display: 'grid', 
             gridTemplateColumns: '1fr 1fr', 
-            height: '98vh', 
+            height: '97vh', 
             width: '100vw', 
             maxWidth: '100%',
             maxHeight: '100%', 
@@ -75,7 +75,6 @@ const AuthPage = ({ onLoginSuccess }) => {
             display: 'flex', 
             justifyContent: 'center', 
             alignItems: 'center', 
-            // Capa de color #f0f2f5 al 50% de opacidad sobre la imagen
             backgroundImage: 'linear-gradient(rgba(240, 242, 245, 0.8), rgba(240, 242, 245, 0.8)), url("/principal_home2.avif")',
             backgroundSize: 'cover',
             backgroundPosition: 'center'

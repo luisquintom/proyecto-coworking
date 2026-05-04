@@ -100,5 +100,3 @@ Fragmento de código
 └── .gitignore       # Exclusión de node_modules, __pycache__ y .env
 
 ```
-
-Desarrollado por Luis Enrique Quinto.

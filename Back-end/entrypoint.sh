@@ -1,17 +1,11 @@
 #!/bin/sh
 
-# Esperamos a que la base de datos esté lista
 echo "Esperando a MySQL..."
 while ! nc -z db 3306; do
   sleep 1
 done
 echo "MySQL está listo."
-
-# Aplicar migraciones
 python manage.py migrate --noinput
-
-# Crear superusuario automáticamente si no existe
-# Usamos variables de entorno para seguridad
 python manage.py shell <<EOF
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -22,5 +16,4 @@ else:
     print('El superusuario ya existe')
 EOF
 
-# Iniciar el servidor
 exec "$@"
