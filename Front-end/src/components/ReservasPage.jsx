@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import NavBar from "./NavBar";
+import {useNavigate} from "react-router";
 
 const ReservasPage = () => {
+    const navigate=useNavigate();
     const [sedes, setSedes] = useState([]);
     const [espacios, setEspacios] = useState([]);
     const [reservas, setReservas] = useState([]);
@@ -30,6 +33,7 @@ const ReservasPage = () => {
                 setUserLabel('Sesión Activa');
             }
         }
+        else navigate("/");
 
         try {
             const config = { headers: getAuthHeader() };
@@ -112,8 +116,7 @@ const ReservasPage = () => {
         const tieneConflicto = reservas.find(r => {
             // Solo comparamos si es el mismo espacio y la misma fecha
             if (r.espacio === parseInt(formData.espacio) && r.fecha === formData.fecha) {
-                const conflicto = formData.hora_inicio < r.hora_fin && formData.hora_fin > r.hora_inicio;          
-                return conflicto;
+                return formData.hora_inicio < r.hora_fin && formData.hora_fin > r.hora_inicio;
             }
             return false;
         });
@@ -175,7 +178,6 @@ const ReservasPage = () => {
 const styles = {
     mainWrapper: {
         height: '90vh',
-        width: '99vw',
         boxSizing: 'border-box',
         backgroundImage: 'url("/reservas_coworking.avif")',
         backgroundSize: 'cover',
@@ -231,11 +233,10 @@ const styles = {
         width: '100%', padding: '18px', backgroundColor: '#1abc9c', color: 'white', border: 'none', borderRadius: '12px',
         cursor: 'pointer', fontWeight: '600', fontSize: '16px', fontFamily: 'inherit', marginTop: '10px'
     },
-   
-   
 };
 
-    return (
+    return (<>
+        <NavBar/>
         <div style={styles.mainWrapper}>
             <div style={styles.overlay}></div>
             
@@ -340,6 +341,7 @@ const styles = {
 
             </div>
         </div>
+        </>
     );
 };
 

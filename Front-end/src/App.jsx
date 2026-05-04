@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import AuthPage from './pages/AuthPage';
-import ReservasPage from './pages/ReservasPage';
+import AuthPage from './components/AuthPage';
+import ReservasPage from './components/ReservasPage';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SedesPage from "./components/SedesPage";
+
 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -13,28 +15,19 @@ function App() {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
-  };
-
   return (
     <div className="App">
-      {isLoggedIn ? (
-        <>
-          <nav style={{ padding: '10px', backgroundColor: '#2c3e50', textAlign: 'right' }}>
-            <button 
-              onClick={handleLogout} 
-              style={{ color: 'white', background: 'none', border: '1px solid white', cursor: 'pointer', padding: '5px 10px', borderRadius: '4px' }}
-            >
-              Cerrar Sesión
-            </button>
-          </nav>
-          <ReservasPage />
-        </>
-      ) : (
-        <AuthPage onLoginSuccess={() => setIsLoggedIn(true)} />
-      )}
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<AuthPage onLoginSuccess={() => {
+                    setIsLoggedIn(true);
+                }}/>}/>
+                <Route path="/reservas" element={<ReservasPage />}/>
+                <Route path="/sedes" element={<SedesPage />}/>
+                <Route path="*" element={<h1>404 Not Found</h1>}/>
+            </Routes>
+        </BrowserRouter>
+
     </div>
   );
 }

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {useNavigate} from "react-router";
 
-const AuthPage = ({ onLoginSuccess }) => {
+function AuthPage ({ onLoginSuccess }) {
+    let navigate = useNavigate();
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
         first_name: '',
@@ -28,6 +30,7 @@ const AuthPage = ({ onLoginSuccess }) => {
             if (isLogin) {
                 localStorage.setItem('token', res.data.access);
                 onLoginSuccess();
+                navigate("/reservas");
             } else {
                 alert('¡Cuenta creada con éxito!');
                 setIsLogin(true);
