@@ -64,36 +64,28 @@ const ReservasPage = () => {
 
     const espaciosFiltrados = espacios.filter(esp => esp.sede === parseInt(sedeSeleccionada));
 
-    // --- Validaciones en el FrontEnd (Reglas del negocio Coworking) ---
+    // --- Validaciones - Reglas ---
     const validarReserva = () => {
         const ahora = new Date();
-        
-        // Creamos objetos de fecha para cálculos de tiempo
         const inicio = new Date(`2000-01-01T${formData.hora_inicio}`);
         const fin = new Date(`2000-01-01T${formData.hora_fin}`);
         const duracionHoras = (fin - inicio) / (1000 * 60 * 60);
 
-        // 1. NO FECHAS PASADAS: Evita reservar ayer o hace una hora
         const momentoReserva = new Date(`${formData.fecha}T${formData.hora_inicio}`);
         if (momentoReserva < ahora) {
             alert("❌ No puedes reservar en el pasado. Elige una fecha y hora futura.");
             return false;
         }
-
-        // 2. ANTELACIÓN MÁXIMA: Máximo 30 días vista
         const limiteFuturo = new Date();
         limiteFuturo.setDate(limiteFuturo.getDate() + 30);
         if (momentoReserva > limiteFuturo) {
             alert("❌ Solo puedes reservar con un máximo de 30 días de antelación.");
             return false;
         }
-
-        // 3. ORDEN CRONOLÓGICO: La salida debe ser después de la entrada
         if (formData.hora_inicio >= formData.hora_fin) {
             alert("❌ La hora de finalización debe ser posterior a la de inicio.");
             return false;
         }
-
         // 4. DURACIÓN MÍNIMA/MÁXIMA: Entre 30 min y 8 horas
         if (duracionHoras < 0.5) {
             alert("❌ La reserva debe ser de al menos 30 minutos.");
@@ -104,14 +96,13 @@ const ReservasPage = () => {
             return false;
         }
 
-        // 5. HORARIO DE APERTURA: 08:00 a 20:00
+        //horario 
         const apertura = "08:00";
         const cierre = "20:00";
         if (formData.hora_inicio < apertura || formData.hora_fin > cierre) {
             alert(`❌ El coworking solo opera de ${apertura} a ${cierre}.`);
             return false;
         }
-
         // 6. DISPONIBILIDAD (SOLAPAMIENTO)
         const tieneConflicto = reservas.find(r => {
             // Solo comparamos si es el mismo espacio y la misma fecha
@@ -132,7 +123,6 @@ const ReservasPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // Si no pasa las validaciones, no enviamos nada al servidor
         if (!validarReserva()) return; 
 
         try {
@@ -151,30 +141,25 @@ const ReservasPage = () => {
             alert('✅ Reserva guardada con éxito');
             window.location.reload(); 
         } catch (error) {
-           // 3. Captura inteligente de errores del Backend
             if (error.response && error.response.data) {
-                // Si el backend envió un error de validación (como el de solapamiento)
-                // Django Rest Framework suele enviar los errores en un objeto o una lista
                 const mensajesError = error.response.data;
                 
                 if (mensajesError.non_field_errors) {
                     alert(`❌ ${mensajesError.non_field_errors[0]}`);
                 } else if (typeof mensajesError === 'object') {
-                    // Si el error viene de un campo específico o es el ValidationError personalizado
                     const primerError = Object.values(mensajesError)[0];
                     alert(`❌ ${primerError}`);
                 } else {
                     alert('❌ Error de validación en el servidor.');
                 }
             } else {
-                // Error de red o servidor caído
                 alert('❌ Error al conectar con el servidor. Verifica tu conexión a internet.');
             }
             console.error("Detalle del error:", error);
         }
     };
 
-   // --- ESTILOS ---
+
 const styles = {
     mainWrapper: {
         height: '90vh',
@@ -242,7 +227,7 @@ const styles = {
             <div style={styles.overlay}></div>
             
             <div style={styles.contentContainer}>
-                {/* FORMULARIO DE RESERVA */}
+                {/* Reservas */}
                 <div style={styles.card}>
                     <h2 style={styles.sectionTitle}>Nueva Reserva</h2>
                     <form onSubmit={handleSubmit}>
@@ -251,7 +236,7 @@ const styles = {
                                 <label style={styles.label}>Sede</label>
                                 <select style={styles.input} required onChange={e => {
                                     setSedeSeleccionada(e.target.value);
-                                    setFormData({...formData, espacio: ''}); // Reiniciar espacio al cambiar sede
+                                    setFormData({...formData, espacio: ''}); 
                                 }}>
                                     <option value="">-- Selecciona --</option>
                                     {sedes.map(s => <option key={s.id} value={s.id}>{s.nombre}</option>)}
@@ -302,35 +287,32 @@ const styles = {
                     </form>
                 </div>
 
-                {/* BLOQUE DERECHO: LISTADO */}
                 <div style={styles.card}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '35px' }}>
                         <h2 style={styles.sectionTitle}>Mis Reservas</h2>
-                        <span style={{ fontSize: '13px', backgroundColor: '#2f3542', color: 'white', padding: '8px 16px', borderRadius: '8px' }}>
+                        <span style={{ fontSize: '13px', backgroundColor: '#420088', color: 'white', padding: '8px 16px', borderRadius: '8px' }}>
                             🧑‍💻 {userLabel}
                         </span>
                     </div>
                     
                     <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
                         {reservas.map(r => {
-                    // Obtenemos el objeto espacio para sacar la capacidad directamente
                     const espacioDetalle = espacios.find(e => e.id === r.espacio);
                     
                     return (
                         <li key={r.id} style={{ padding: '25px', marginBottom: '20px', borderRadius: '8px' }}>
-                            <div style={{ fontSize: '18px', fontWeight: '600', color: '#2c3e50', marginBottom: '8px' }}>
+                            <div style={{ fontSize: '18px', fontWeight: '600', color: '#ff7f24', marginBottom: '8px' }}>
                               {obtenerInfoReserva(r.espacio)}  
                             </div>
                             
                             <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                                <div style={{ fontSize: '15px', color: '#1abc9c', fontWeight: '600' }}>
+                                <div style={{ fontSize: '15px', color: '#ffe5b4', fontWeight: '600' }}>
                                     🗓️ {r.fecha}
                                 </div>
-                                <div style={{ fontSize: '15px', color: '#747d8c' }}>
+                                <div style={{ fontSize: '15px', color: '#f4f5f8' }}>
                                      🕒 {r.hora_inicio.slice(0,5)} - {r.hora_fin.slice(0,5)}
                                 </div>
-                                {/* etiqueta de capacidad en la lista */}
-                                <div style={{ fontSize: '14px', color: '#3498db', backgroundColor: '#ebf5fb', padding: '2px 8px', borderRadius: '8px' }}>
+                                <div style={{ fontSize: '14px', color: '#1b1b19', backgroundColor: '#b7bab4', padding: '2px 8px', borderRadius: '8px' }}>
                                     👥 Capacidad: {espacioDetalle?.capacidad || 'N/A'}
                                 </div>
                             </div>

@@ -15,5 +15,7 @@ if not User.objects.filter(username='admin').exists():
 else:
     print('El superusuario ya existe')
 EOF
+echo "Arrancando el servidor de Django..."
+python manage.py runserver 0.0.0.0:8000
 
 exec "$@"

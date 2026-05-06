@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router";
-import "./styles.css";
 
 function AuthPage ({ onLoginSuccess }) {
     let navigate = useNavigate();
@@ -42,9 +41,7 @@ function AuthPage ({ onLoginSuccess }) {
         }
     };
 
-    // ESTRUCTURA BASADA EN GRID Y FLEXBOX
     const styles = {
-        // GRID: Divide la pantalla en dos columnas iguales
         container: { 
             display: 'grid', 
             gridTemplateColumns: '1fr 1fr', 
@@ -56,7 +53,6 @@ function AuthPage ({ onLoginSuccess }) {
             fontFamily: 'sans-serif', 
             boxSizing: 'border-box' 
         },
-        // FLEXBOX: Centra el contenido de la imagen (vertical - horizontal)
         imageSection: {
             display: 'flex',
             flexDirection: 'column',
@@ -74,7 +70,7 @@ function AuthPage ({ onLoginSuccess }) {
             top: 0, left: 0, right: 0, bottom: 0, 
             backgroundColor: 'rgba(1,2,3,0.5)'
         },
-        // FLEXBOX: Centra la tarjeta de login
+        // login
         formSection: { 
             display: 'flex', 
             justifyContent: 'center', 
@@ -118,7 +114,7 @@ function AuthPage ({ onLoginSuccess }) {
 
     return (
         <div style={styles.container}>
-            {/* SECCIÓN IZQUIERDA pantalla principal */}
+            {/* principal */}
             <div style={styles.imageSection}>
                 <div style={styles.overlay}></div>
                 <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
@@ -127,7 +123,7 @@ function AuthPage ({ onLoginSuccess }) {
                 </div>
             </div>
 
-            {/* SECCIÓN DERECHA pantalla principal- LOGIN inicial */}
+            {/*login */}
             <div style={styles.formSection}>
                 <div style={styles.card}>
                     <h2 style={{ color: '#B16C04', marginBottom: '30px', textAlign: 'center', fontSize: '24px' }}>
@@ -136,7 +132,6 @@ function AuthPage ({ onLoginSuccess }) {
 
                     <form onSubmit={handleSubmit}>
                         {!isLogin && (
-                            // GRID interno para colocar Nombre y Apellido en la misma línea
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                                 <input type="text" name="first_name" placeholder="Nombre" style={styles.input} onChange={handleChange} required />
                                 <input type="text" name="last_name" placeholder="Apellido" style={styles.input} onChange={handleChange} required />

@@ -7,9 +7,7 @@ export default function NavBar() {
         navigate("/");
     }
 
-    useEffect(() => {
-
-    }, []);
+    useEffect(() => {}, []);
     return(
         <nav style={{ padding: '10px', backgroundColor: '#1D1D1F', textAlign: 'right', }}>
     <button
