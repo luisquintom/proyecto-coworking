@@ -87,7 +87,7 @@ function AuthPage ({ onLoginSuccess }) {
             backgroundColor: 'rgba(1,2,3,0.96)',
             borderRadius: '8px', 
             transform: 'scale(0.85)',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.1)' 
+            boxShadow: '0 8px 24px rgba(208, 5, 5, 0.1)' 
         },
         input: { 
             width: '100%', 
