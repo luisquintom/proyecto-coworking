@@ -12,6 +12,9 @@ const ReservasPage = () => {
     const [userLabel, setUserLabel] = useState('Usuario');
     const [editandoId, setEditandoId] = useState(null); 
 
+    const HORA_APERTURA = "08:00";
+    const HORA_CIERRE = "20:00";
+
     const [formData, setFormData] = useState({
         espacio: '',
         fecha: '',
@@ -100,6 +103,11 @@ const ReservasPage = () => {
         const duracionHoras = (fin - inicio) / (1000 * 60 * 60);
         const momentoReserva = new Date(`${formData.fecha}T${formData.hora_inicio}`);
         
+        if (formData.hora_inicio < HORA_APERTURA || formData.hora_fin > HORA_CIERRE) {
+        alert(`❌ Horario fuera de servicio. Nuestro horario es de ${HORA_APERTURA} a ${HORA_CIERRE}.`);
+        return false;
+    }
+
         if (momentoReserva < ahora) {
             alert("❌ No puedes reservar en el pasado.");
             return false;
