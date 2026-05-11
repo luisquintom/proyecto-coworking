@@ -211,7 +211,7 @@ const ReservasPage = () => {
                                     <label style={styles.label}>Espacio</label>
                                     <select style={styles.input} required disabled={!sedeSeleccionada} value={formData.espacio} onChange={e => setFormData({...formData, espacio: e.target.value})}>
                                         <option value="">-- Selecciona --</option>
-                                        {espaciosFiltrados.map(esp => <option key={esp.id} value={esp.id}>{esp.nombre}</option>)}
+                                        {espaciosFiltrados.map(esp => <option key={esp.id} value={esp.id}>{esp.nombre}(Cap: {esp.capacidad} pers.)</option>)}
                                     </select>
                                 </div>
                             </div>
